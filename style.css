@@ -1,0 +1,74 @@
+/* Basic reset for clean margins */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.quiz-container {
+    background-color: white;
+    width: 100%;
+    max-width: 500px;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+}
+
+#quiz-header {
+    margin-bottom: 20px;
+}
+
+#question {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+ul {
+    list-style-type: none;
+}
+
+/* Styling the option buttons */
+.option-btn {
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.option-btn:hover {
+    background-color: #e2e6ea;
+}
+
+#restart-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+#restart-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Utility class to hide elements */
+.hidden {
+    display: none;
+}
