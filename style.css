@@ -72,3 +72,8 @@ ul {
 .hidden {
     display: none;
 }
+#timer {
+    font-weight: bold;
+    color: #d9534f; 
+    margin-bottom: 15px;
+}

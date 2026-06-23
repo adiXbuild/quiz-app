@@ -23,60 +23,53 @@ const quizData = [
             "document.write('Hello World');"
         ],
         correctAnswer: 1
-    },
-    {
-        question: "What is the full form of DOM in js?",
-        options: [
-            "data object manipulation", 
-            "document object model", 
-            "document oriented manipulation", 
-            "date of original model"
-        ],
-        correctAnswer: 1
-    },
-    {
-        question: "what is the full form of DSA",
-        options: [
-            "Date of structure and analysis", 
-            "Data structures and analysis", 
-            "Data structure and Algorithm", 
-            "Date of structures and alogrithm"
-        ],
-        correctAnswer: 2
     }
 ];
 
 let currentQuestionIndex = 0;
 let score = 0;
+let timeLeft = 15;
+let timerInterval;
 const questionElement = document.getElementById("question");
 const optionsList = document.getElementById("options-list");
 const quizHeader = document.getElementById("quiz-header");
 const scoreContainer = document.getElementById("score-container");
 const scoreText = document.getElementById("score-text");
+const timerElement = document.getElementById("timer");
 
 function loadQuestion() {
+    optionsList.innerHTML = "";
     
-    optionsList.innerHTML = ""; // Clears the previous options
-    const currentQuestion = quizData[currentQuestionIndex]; // Gets the current question object
-    questionElement.innerText = currentQuestion.question; // Updates the question text
+    const currentQuestion = quizData[currentQuestionIndex];
+    questionElement.innerText = currentQuestion.question;
+
     currentQuestion.options.forEach((option, index) => {
         const button = document.createElement("button");
         button.innerText = option;
         button.classList.add("option-btn");
+        
         button.addEventListener("click", function() {
-            checkAnswer(index);});
+            checkAnswer(index);
+        });
+        
         const li = document.createElement("li");
         li.appendChild(button);
         optionsList.appendChild(li);
     });
+    startTimer();
 }
 
 function checkAnswer(selectedIndex) {
+    clearInterval(timerInterval);
+
     const correctIndex = quizData[currentQuestionIndex].correctAnswer;
+    
     if (selectedIndex === correctIndex) {
         score++;
     }
+
     currentQuestionIndex++;
+
     if (currentQuestionIndex < quizData.length) {
         loadQuestion();
     } else {
@@ -84,9 +77,34 @@ function checkAnswer(selectedIndex) {
     }
 }
 
+function startTimer() {
+    timeLeft = 15;
+    timerElement.innerText = `Time: ${timeLeft}s`;
+
+    clearInterval(timerInterval);
+
+    timerInterval = setInterval(() => {
+        timeLeft--;
+        timerElement.innerText = `Time: ${timeLeft}s`;
+
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval); 
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                loadQuestion();
+            } else {
+                showScore();
+            }
+        }
+    }, 1000);
+}
+
 function showScore() {
+    clearInterval(timerInterval);
+
     quizHeader.classList.add("hidden");
     optionsList.classList.add("hidden");
+    
     scoreContainer.classList.remove("hidden");
     scoreText.innerText = `You scored ${score} out of ${quizData.length}!`;
 }
